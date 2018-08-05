@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  
+  webserver:
+    build: .
+    image: site_server
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./www:/var/www/html
+    links:
+      - db
+  
+  db:
+    container_name: site_db
+    image: mysql:5.7
+    volumes:
+      - ./db:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: project
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
